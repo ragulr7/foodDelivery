@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Food Delivery</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="menu">
+        <h2>Menu</h2>
+        <div class="menu-item">
+            <img src="https://wallpapercave.com/wp/wp5133885.jpg" alt="Burger">
+            <h3>Burger & Fries</h3>
+            <p>Delicious burger with fries</p>
+            <span class="price">Starting from 120 Only</span>
+            <button class="order-button" onclick="addToCart('Burger', 1250)">Order</button>
+        </div>
+    
+        <!-- Add more menu items below -->
+        
+        <div class="menu-item">
+            <img src="https://wallpapercave.com/dwp1x/wp11989737.jpg" alt="Pizza">
+            <h3>Pizza</h3>
+            <p>Authentic Italian pizza with various toppings</p>
+            <span class="price">Starting from 299 Only</span>
+            <button class="order-button" onclick="addToCart('Pizza', 299)">Order</button>
+        </div>
+    
+        <div class="menu-item">
+            <img src="https://t3.ftcdn.net/jpg/04/41/20/18/360_F_441201852_XQqp1wbAQj9udOC3iT7D0ahKgaf71bns.jpg" alt="Chicken">
+            <h3>Chicken</h3>
+            <p>Taste the magic of homemade chicken curry</p>
+            <span class="price">Starting from 150 Only</span>
+            <button class="order-button" onclick="addToCart('Chicken', 150)">Order</button>
+        </div>
+    
+        <div class="menu-item">
+            <img src="https://e0.pxfuel.com/wallpapers/874/641/desktop-wallpaper-nalli-biryani-food-fusion-beef-biryani.jpg" alt="Beef">
+            <h3>Beef</h3>
+            <p>Beef time = Best time!</p>
+            <span class="price">Starting from 100 Only</span>
+            <button class="order-button" onclick="addToCart('Beef', 100)">Order</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://c0.wallpaperflare.com/preview/527/381/127/cooked-meat-on-plate.jpg" alt="Pork">
+            <h3>Pork</h3>
+            <p>Ding-dong! Pork calling!</p>
+            <span class="price">Starting from 199 Only</span>
+            <button class="order-button" onclick="addToCart('Pork', 199)">Order</button>
+        </div>
+    </section>
+
+    <section class="cart">
+        <h2>Shopping Cart</h2>
+        <ul id="cart-items">
+            <!-- Cart items will be displayed here -->
+        </ul>
+        <button class="order-button" onclick="placeOrder()">Place Order</button>
+    </section>
+
+    <section class="address-form" style="display:none;">
+        <h2>Delivery Address</h2>
+        <form id="delivery-address-form">
+            <label for="address">Enter your delivery address:</label>
+            <input type="text" id="delivery-address" name="delivery-address" required>
+            <button type="submit">Confirm Delivery Address</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Food Delivery</p>
+    </footer>
+
+    <script>
+        const cartItems = document.getElementById("cart-items");
+        const addressForm = document.querySelector(".address-form");
+
+        // JavaScript function to add items to the cart
+        function addToCart(itemName, itemPrice) {
+            const li = document.createElement("li");
+            li.textContent = `${itemName} - ${itemPrice}`;
+            cartItems.appendChild(li);
+        }
+
+        // JavaScript function to place an order
+        function placeOrder() {
+            const cartList = cartItems.querySelectorAll("li");
+            if (cartList.length === 0) {
+                alert("Your cart is empty. Please add items to your cart before placing an order.");
+            } else {
+                addressForm.style.display = "block"; // Display the address form
+            }
+        }
+
+        // Handle address submission
+        const deliveryAddressForm = document.getElementById("delivery-address-form");
+        deliveryAddressForm.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            const deliveryAddress = document.getElementById("delivery-address").value;
+            if (deliveryAddress.trim() === "") {
+                alert("Please enter a valid delivery address.");
+            } else {
+                const cartList = cartItems.querySelectorAll("li");
+                const orderSummary = [];
+                cartList.forEach((item) => {
+                    orderSummary.push(item.textContent);
+                });
+
+                alert(`Your order has been placed!\n\nDelivery Address: ${deliveryAddress}\n\nOrder Details:\n${orderSummary.join('\n')}`);
+                cartItems.innerHTML = ""; // Clear the cart after placing the order
+                addressForm.style.display = "none"; // Hide the address form
+            }
+        });
+    </script>
+</body>
+</html>
